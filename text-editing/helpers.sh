@@ -1,7 +1,6 @@
 EDITOR=nano
 
-list=/usr/tmp/list.txt
-
+list=/tmp/list.txt
 
 say () {
 
@@ -15,13 +14,6 @@ indent () {
 
 }
 
-say ""
-
-say "Type..."
-
-
-indent "\"f\" to find the current result."
-
 f () {
 	file=$( head -1 $list )
 
@@ -29,9 +21,6 @@ f () {
 
 	left
 }
-
-
-indent "\"n\" to move to the next result."
 
 n () {
 
@@ -43,9 +32,6 @@ n () {
 
 }
 
-
-indent "\"left\" to count the search results."
-
 left () {
 
 	remaining=`wc -l $list | awk '{ print $1 }'`;
@@ -54,12 +40,15 @@ left () {
 
 }
 
+files () {
 
-indent "\"search,\" followed by a keyword, to find matching files."
+	cat $list
+
+}
 
 search () {
 
-	grep -i "$1" -R /usr/src \
+	grep -i "$1" -R . \
 	| tr ':' ' ' \
 	| awk '{ print $1 }' \
 	| uniq \
@@ -69,6 +58,28 @@ search () {
 
 }
 
-say ""
+h () {
 
-say "Search results are in $list."
+	echo
+
+	say "Search the current directory"
+
+	say "Type..."
+
+	indent "\"search,\" followed by a keyword, to find matching files."
+
+	indent "\"f\" to edit the current file."
+
+	indent "\"n\" to move to the next result."
+
+	indent "\"left\" to count the search results."
+
+	indent "\"files\" to see results."
+
+	indent "\"h\" for help."
+
+	say "Search results are in $list."
+
+}
+
+h
