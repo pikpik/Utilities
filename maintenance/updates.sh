@@ -19,22 +19,21 @@ fi
 	git log \
 		origin/master...master \
 		--pretty=format:"%cr - %s (%h)" \
-	| awk '
-		BEGIN {
-			print ""
-		}
 
-		{
-			print $0
-		}
+) | awk '
+	BEGIN {
+		print ""
+	}
 
-		END {
-			print ""
-			print "\t" NR ( NR == 1 ? " update" : " updates" )
-			print ""
-			print "To update: git pull"
-			print ""
-		}
-	'
+	{
+		print $0
+	}
 
-)
+	END {
+		print ""
+		print "\t" NR ( NR == 1 ? " update" : " updates" )
+		print ""
+		print "To update: git pull"
+		print ""
+	}
+'
